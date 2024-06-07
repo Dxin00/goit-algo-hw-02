@@ -1,7 +1,7 @@
 import queue
 import random
 import time
-# ------------------------------------------------------------------------------
+
 class ServiceCenter:
     def __init__(self):
         self.request_queue = queue.Queue()
