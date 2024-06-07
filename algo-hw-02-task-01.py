@@ -8,34 +8,49 @@ class ServiceCenter:
 
     def generate_request(self):
         request_id = random.randint(1000, 9999)
-        print(f"Новая заявка добавлена: {request_id}")
+        print(f"Нова заявка додана: {request_id}")
         self.request_queue.put(request_id)
 
     def process_request(self):
         if not self.request_queue.empty():
             request_id = self.request_queue.get()
-            print(f"Обработка заявки: {request_id}")
+            print(f"Обробка заявки: {request_id}")
             time.sleep(1)
         else:
-            print("Очередь пуста, нет заявок для обработки.")
+            print("Черга пуста, нема заявок для обробки.")
+
+    def view_requests(self):
+        if not self.request_queue.empty():
+            print("Заявки в черзі:")
+            temp_list = []
+            while not self.request_queue.empty():
+                request_id = self.request_queue.get()
+                print(request_id)
+                temp_list.append(request_id)
+            for request_id in temp_list:
+                self.request_queue.put(request_id)
+        else:
+            print("Черга пуста.")
 
 def main():
     service_center = ServiceCenter()
     
     try:
         while True:
-            action = input("Введите 'n' для новой заявки, 'p' для обработки заявки, или 'q' для выхода: ").strip().lower()
+            action = input("Введіть 'n' для нової заявки, 'p' для обробки заявки, 'v' для перегляду черги, або 'q' для виходу: ").strip().lower()
             if action == 'n':
                 service_center.generate_request()
             elif action == 'p':
                 service_center.process_request()
+            elif action == 'v':
+                service_center.view_requests()
             elif action == 'q':
-                print("Завершение программы.")
+                print("Завершення програми.")
                 break
             else:
-                print("Неверная команда. Попробуйте снова.")
+                print("Неправильна команда. Спробуйте знову.")
     except KeyboardInterrupt:
-        print("\nПрограмма прервана пользователем.")
+        print("\nПрограма завершена користувачем.")
 
 if __name__ == "__main__":
     main()
